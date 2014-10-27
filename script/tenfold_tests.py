@@ -25,8 +25,8 @@ def autotest(finfolder, method):
 def autocheck(finfolder, method):
     for i in range(1,11):
         #t1testing_tax_assignments.txt
-        assignment = finfolder + "tt" + repr(i) + method + "/t" + repr(i) + "testing.fa.trim_tax_assignments.txt"
-        truth = finfolder + "t" + repr(i) + "testing.tax"
+        assignment = finfolder + repr(i) + method + "/" + repr(i) + "testing_tax_assignments.txt"
+        truth = finfolder + repr(i) + "testing.tax"
         check(assignment, truth)
 
 def ngssize(fin, start = 0, end = 2428):
