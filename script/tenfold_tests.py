@@ -16,10 +16,10 @@ def check(assignment, truth):
 
 def autotest(finfolder, method):
     for i in range(1,11):
-        query = ngssize(fin = finfolder + "t" + repr(i) + "testing.fa")
-        refseq = finfolder + "t" + repr(i) + "training.fa"
-        taxonomy = finfolder + "t" + repr(i) + "training.tax"
-        outdir = finfolder + "tt" + repr(i) + method + "/"
+        query = finfolder  + repr(i) + "testing.fa"
+        refseq = finfolder  + repr(i) + "training.fa"
+        taxonomy = finfolder  + repr(i) + "training.tax"
+        outdir = finfolder  + repr(i) + method + "/"
         run(query, refseq, taxonomy, method, outdir)
 
 def autocheck(finfolder, method):
