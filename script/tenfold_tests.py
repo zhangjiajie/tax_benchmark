@@ -108,7 +108,10 @@ if __name__ == "__main__":
     
     #autotest(finfolder = "/panasas/zhangje/epac/tenfold/rdp/", method = "rdp")
     #autotest(finfolder = "/panasas/zhangje/epac/tenfold/gg85/", method = "blast")
-    autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "uclust")
-    autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "rdp")
-    autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "blast")
+    autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "uclust")
+    autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "rdp")
+    autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "blast")
+    #autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "uclust")
+    #autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "rdp")
+    #autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "blast")
     #autocheck(finfolder = "/panasas/zhangje/epac/tenfold/gg85/", method = "blast")
