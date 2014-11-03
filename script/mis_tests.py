@@ -49,7 +49,7 @@ def findmis(refseq, reftax, name, method, temfolder):
     os.remove(temfolder + "ranks.tax")
     os.remove(temfolder + "query_tax_assignments.txt")
     
-    return resultss.split()[1].split(";")
+    return resultss, resultss.split()[1].split(";")
     
     
 def autotest(refseq, reftax, testingtax, tf = "/home/zhangje/GIT/tax_benchmark/script/tmp/"):
@@ -77,12 +77,22 @@ def autotest(refseq, reftax, testingtax, tf = "/home/zhangje/GIT/tax_benchmark/s
     num_corrected_blast = 0
     num_unchanged_blast = 0
     
+    f_uclust = open(testingtax+".uclust", "w")
+    f_rdp = open(testingtax+".rdp", "w")
+    f_blast = open(testingtax+".blast", "w")
+    f_mis = open(testingtax+".misb", "w")
+    f_umis = open(testingtax+".umisb", "w")
+    
     for test in testings:
-        result_uclust = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "uclust", temfolder = tf)
-        result_rdp = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "rdp", temfolder = tf)
-        result_blast = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "blast", temfolder = tf)
+        ru, result_uclust = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "uclust", temfolder = tf)
+        f_uclust.write(ru + "\n")
+        rr, result_rdp = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "rdp", temfolder = tf)
+        f_rdp.write(rr + "\n")
+        rb, result_blast = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "blast", temfolder = tf)
+        f_blast.write(fb + "\n")
         truth = test[1]
         if len(truth) == 8:
+            f_mis.write(test[0] + "	" + rank2string(truth[0:-1]) + "\n")
             rank_nr = int(truth[7])
             if len(result_uclust) > rank_nr and result_uclust[rank_nr] == truth[rank_nr]:
                 num_corrected_uclust = num_corrected_uclust + 1
@@ -91,6 +101,7 @@ def autotest(refseq, reftax, testingtax, tf = "/home/zhangje/GIT/tax_benchmark/s
             if len(result_blast) > rank_nr and result_blast[rank_nr] == truth[rank_nr]:
                 num_corrected_blast = num_corrected_blast + 1
         else:
+            f_umis.write(test[0] + "	" + rank2string(truth) + "\n")
             if result_uclust == truth:
                 num_unchanged_uclust = num_unchanged_uclust + 1
             if result_rdp == truth:
@@ -101,21 +112,27 @@ def autotest(refseq, reftax, testingtax, tf = "/home/zhangje/GIT/tax_benchmark/s
         print("uclust:" + repr(result_uclust))
         print("rdp:"+ repr(result_rdp))
         print("blast:" +repr(result_blast))
+    
+    f_uclust.close()
+    f_rdp.close()
+    f_blast.close()
+    f_mis.close()
+    f_umis.close()
         
     print("method   corrected   unchanged")
-    print("uclust"+ "   " +num_corrected_uclust + " " + num_unchanged_uclust)
-    print("rdp"+ "   " +num_corrected_rdp + " " + num_unchanged_rdp)
-    print("blast"+ "   " +num_corrected_blast + " " + num_unchanged_blast)
+    print("uclust"+ "   " +repr(num_corrected_uclust) + " " + repr(num_unchanged_uclust))
+    print("rdp"+ "   " +repr(num_corrected_rdp) + " " + repr(num_unchanged_rdp))
+    print("blast"+ "   " +repr(num_corrected_blast) + " " + repr(num_unchanged_blast))
     
     with open(testingtax+".results", "w") as fo:
         fo.write("method   corrected   unchanged \n")
-        fo.write("uclust"+ "   " +num_corrected_uclust + " " + num_unchanged_uclust + "\n")
-        fo.write("rdp"+ "   " +num_corrected_rdp + " " + num_unchanged_rdp + "\n")
-        fo.write("blast"+ "   " +num_corrected_blast + " " + num_unchanged_blast + "\n")
+        fo.write("uclust"+ "   " +repr(num_corrected_uclust) + " " + repr(num_unchanged_uclust) + "\n")
+        fo.write("rdp"+ "   " +repr(num_corrected_rdp) + " " + repr(num_unchanged_rdp) + "\n")
+        fo.write("blast"+ "   " +repr(num_corrected_blast) + " " + repr(num_unchanged_blast) + "\n")
      
 if __name__ == "__main__":
     if len(sys.argv) < 3: 
-        print("python mis_test.py /home/zhangje/GIT/tax_benchmark/simulation_LTP/sim.fasta /home/zhangje/GIT/tax_benchmark/simulation_LTP/mislable/5/mLTP1.tax /home/zhangje/GIT/tax_benchmark/simulation_LTP/mislable/5/mLTP1.true.tax  /home/zhangje/GIT/tax_benchmark/script/tmp/")
+        print("python mis_tests.py /home/zhangje/GIT/tax_benchmark/simulation_LTP/sim.fasta /home/zhangje/GIT/tax_benchmark/simulation_LTP/mislable/5/mLTP1.tax /home/zhangje/GIT/tax_benchmark/simulation_LTP/mislable/5/mLTP1.true.tax  /home/zhangje/GIT/tax_benchmark/script/tmp/")
         sys.exit()
     
     autotest(refseq = sys.argv[1], 
