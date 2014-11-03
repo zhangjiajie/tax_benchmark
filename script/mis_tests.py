@@ -89,7 +89,7 @@ def autotest(refseq, reftax, testingtax, tf = "/home/zhangje/GIT/tax_benchmark/s
         rr, result_rdp = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "rdp", temfolder = tf)
         f_rdp.write(rr + "\n")
         rb, result_blast = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "blast", temfolder = tf)
-        f_blast.write(fb + "\n")
+        f_blast.write(rb + "\n")
         truth = test[1]
         if len(truth) == 8:
             f_mis.write(test[0] + "	" + rank2string(truth[0:-1]) + "\n")
