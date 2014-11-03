@@ -31,7 +31,7 @@ def findmis(refseq, reftax, name, method, temfolder):
                 fq.write(ele[1] + "\n")
     
     with open(temfolder + "ranks.tax", "w") as fo:
-        for ele in refseq:
+        for ele in reftax:
             if ele[0] != name:
                 fo.write(name + "	" + rank2string(ele[1]) + "\n")
     
