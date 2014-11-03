@@ -8,7 +8,7 @@ from ete2 import SeqGroup
 
 def run(query, refseq, taxonomy, method, outdir):
     #assign_taxonomy.py -i repr_set_seqs.fasta -r ref_seq_set.fna -t id_to_taxonomy.txt -m blast/rdp
-    print(["assign_taxonomy.py", "-i", query, "-r", refseq, "-t", taxonomy, "-m", method, "-o", outdir])
+    #print(["assign_taxonomy.py", "-i", query, "-r", refseq, "-t", taxonomy, "-m", method, "-o", outdir])
     call(["assign_taxonomy.py", "-i", query, "-r", refseq, "-t", taxonomy, "-m", method, "-o", outdir, "--rdp_max_memory", "7500"])
 
 def rank2string(l):
@@ -97,18 +97,22 @@ def autotest(refseq, reftax, testingtax):
                 num_unchanged_rdp = num_unchanged_rdp + 1
             if result_uclust == truth:
                 num_unchanged_blast = num_unchanged_blast + 1
-        print("T:" + repr(truth))
-        print(repr(result_uclust))
-        print(repr(result_rdp))
-        print(repr(result_blast))
+        print("truth:" + repr(truth))
+        print("uclust:" + repr(result_uclust))
+        print("rdp:"+ repr(result_rdp))
+        print("blast:" +repr(result_blast))
         
     print("method   corrected   unchanged")
     print("uclust"+ "   " +num_corrected_uclust + " " + num_unchanged_uclust)
     print("rdp"+ "   " +num_corrected_rdp + " " + num_unchanged_rdp)
     print("blast"+ "   " +num_corrected_blast + " " + num_unchanged_blast)
+    
+    with open(testingtax+".results", "w") as fo:
+        fo.write("method   corrected   unchanged \n")
+        fo.write("uclust"+ "   " +num_corrected_uclust + " " + num_unchanged_uclust + "\n")
+        fo.write("rdp"+ "   " +num_corrected_rdp + " " + num_unchanged_rdp + "\n")
+        fo.write("blast"+ "   " +num_corrected_blast + " " + num_unchanged_blast + "\n")
      
-    
-    
 if __name__ == "__main__":
     autotest(refseq = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/sim.fasta", reftax = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/mislable/mLTP1.tax", testingtax = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/mislable/mLTP1.true.tax")
     
