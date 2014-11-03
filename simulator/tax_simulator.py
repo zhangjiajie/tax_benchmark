@@ -3,27 +3,35 @@ import os
 import sys
 import random
 import math
+import copy
 
 class rd_generator:
     def __init__(self, seed):
         self.rand_nr = random.Random()
         self.rand_nr.seed(seed)
-        #self.rand_nr.randint(0, 2)
-        #.shuffle(range())
 
 def map2string(m):
     outs = ""
     for key in m:
         v = m[key]
+        #print(key)
+        #print(v)
         vv = ""
         for vi in v:
             vv = vv + vi + ";"
         vv = vv[0:-1]
-        outs = outs + key + "   " + vv + "\n"
+        outs = outs + key + "	" + vv + "\n"
     return outs
+
+def rank2string(l):
+    s = ""
+    for e in l:
+        s = s + e + ";"
+    s = s[0:-1]
+    return s
  
 class rd_mislable:
-    def __init__(self, tax_input, num_mis = 100):
+    def __init__(self, tax_input, seed, num_mis = 100):
         self.num_mis = num_mis
         self.prob = [0.05, 0.05, 0.1, 0.3, 0.5] #p, c, o, f ,g 
         self.num = [int(x*100) for x in self.prob]
@@ -31,16 +39,15 @@ class rd_mislable:
         self.names = []
         with open(tax_input) as fin:
             for line in fin:
-                ll = line.strip().split()
-                taxonomy = ll[1].split(";")
+                ll = line.strip().split("	")
+                taxonomy = ll[1].split("; ")
                 self.tax[ll[0]] = taxonomy
                 self.names.append(ll[0])
-        self.rd = rd_generator(seed = 22)
+        self.rd = rd_generator(seed = seed)
         self.truetax = {}
         self.mistax = {}
         self.remaintax = {}
         self.testingtax = {}
-        
         
     def find_all_taxs(self, rank_idx, rank_name_exclude):
         rks = []
@@ -51,10 +58,16 @@ class rd_mislable:
         return rks
     
     def mis_lable(self, names, rank_idx):
-        for name is names:
+        for name in names:
             remain_ranks = self.find_all_taxs(rank_idx, name)
             idx = self.rd.rand_nr.randint(0, len(remain_ranks))
-            self.truetax[name] = self.tax[name]
+            
+            tk1 = self.tax[name]
+            
+            tk2 = copy.copy(tk1)
+            
+            tk2.append(str(rank_idx))
+            self.truetax[name] = tk2
             self.mistax[name] = remain_ranks[idx]
     
     def simulate(self, fout):
@@ -108,8 +121,25 @@ class rd_mislable:
         for name in names_rest:
             self.remaintax[name] = self.tax[name]
             
+        print("1")
+        s_mis = map2string(self.mistax)
+        print("2")
+        s_mis_true = map2string(self.truetax)
+        print("3")
+        s_testing = map2string(self.testingtax)
+        print("4")
+        s_remain = map2string(self.remaintax)
         
+        with open(fout+".tax", "w") as fo:
+            fo.write(s_mis + s_testing + s_remain)
+        
+        with open(fout+".testing.tax", "w") as fo:
+            fo.write(s_mis + s_testing)
+            
+        with open(fout+".true.tax", "w") as fo:
+            fo.write(s_mis_true + s_testing)
         
 
 if __name__ == "__main__":
-    pass
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "22222222222")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP10")

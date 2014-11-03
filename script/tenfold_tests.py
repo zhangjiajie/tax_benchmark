@@ -61,7 +61,7 @@ Species	2	0	2	492	13	1.000	0.500	0.133	0.235
 
 """
 
-def autosum(finfolder, method):
+def autosum(finfolder, method = ""):
     titleline = ""
     rank = ["", 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0]
     allrank = []
@@ -74,7 +74,8 @@ def autosum(finfolder, method):
     allrank.append(["", 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0])
     #print allrank
     for i in range(1,11):
-        fsum = finfolder + "t" + repr(i) + method + "/t" + repr(i) + "testing_tax_assignments.txt.stats"
+        #fsum = finfolder + repr(i) + method + repr(i) + "testing_tax_assignments.txt.stats"
+        fsum = finfolder + repr(i) + "testing.fa.assignment.txt.stats"
         with open(fsum) as fo:
             lines = fo.readlines()
             titleline = lines[0]
@@ -88,7 +89,7 @@ def autosum(finfolder, method):
                     allrank[j-1][k+1] = allrank[j-1][k+1] + num
                 #print(allrank)
     #print(allrank)
-    fout = open(finfolder + method + ".stas", "w")
+    fout = open(finfolder + method + "epa.stas", "w")
     fout.write(titleline)
     for rk in allrank:
         fout.write(rk[0] + "\t")
@@ -108,10 +109,11 @@ if __name__ == "__main__":
     
     #autotest(finfolder = "/panasas/zhangje/epac/tenfold/rdp/", method = "rdp")
     #autotest(finfolder = "/panasas/zhangje/epac/tenfold/gg85/", method = "blast")
-    autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "uclust")
-    autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "rdp")
-    autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "blast")
+    #autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "uclust")
+    #autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "rdp")
+    #autotest(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "blast")
     #autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "uclust")
     #autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "rdp")
     #autocheck(finfolder = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/ten_fold/", method = "blast")
     #autocheck(finfolder = "/panasas/zhangje/epac/tenfold/gg85/", method = "blast")
+    autosum("/home/zhangje/")
