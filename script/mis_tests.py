@@ -85,11 +85,11 @@ def autotest(refseq, reftax, testingtax, tf = "/home/zhangje/GIT/tax_benchmark/s
     
     for test in testings:
         ru, result_uclust = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "uclust", temfolder = tf)
-        f_uclust.write(ru + "\n")
+        f_uclust.write(ru)
         rr, result_rdp = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "rdp", temfolder = tf)
-        f_rdp.write(rr + "\n")
+        f_rdp.write(rr)
         rb, result_blast = findmis(refseq = seqs, reftax = ranks, name = test[0], method = "blast", temfolder = tf)
-        f_blast.write(rb + "\n")
+        f_blast.write(rb)
         truth = test[1]
         if len(truth) == 8:
             f_mis.write(test[0] + "	" + rank2string(truth[0:-1]) + "\n")
