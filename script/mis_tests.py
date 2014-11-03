@@ -9,7 +9,7 @@ from ete2 import SeqGroup
 def run(query, refseq, taxonomy, method, outdir):
     #assign_taxonomy.py -i repr_set_seqs.fasta -r ref_seq_set.fna -t id_to_taxonomy.txt -m blast/rdp
     print(["assign_taxonomy.py", "-i", query, "-r", refseq, "-t", taxonomy, "-m", method, "-o", outdir])
-    call(["assign_taxonomy.py", "-i", query, "-r", refseq, "-t", taxonomy, "-m", method, "-o", outdir, "--rdp_max_memory", "7500"], shell=False)
+    call(["assign_taxonomy.py", "-i", query, "-r", refseq, "-t", taxonomy, "-m", method, "-o", outdir, "--rdp_max_memory", "7500"])
 
 def rank2string(l):
     s = ""
@@ -33,7 +33,7 @@ def findmis(refseq, reftax, name, method, temfolder):
     with open(temfolder + "ranks.tax", "w") as fo:
         for ele in reftax:
             if ele[0] != name:
-                fo.write(name + "	" + rank2string(ele[1]) + "\n")
+                fo.write(ele[0] + "	" + rank2string(ele[1]) + "\n")
     
     fq.close()
     
