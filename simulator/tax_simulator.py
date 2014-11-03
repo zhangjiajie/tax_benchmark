@@ -31,10 +31,10 @@ def rank2string(l):
     return s
  
 class rd_mislable:
-    def __init__(self, tax_input, seed, num_mis = 100):
+    def __init__(self, tax_input, seed, num_mis = 500):
         self.num_mis = num_mis
         self.prob = [0.05, 0.05, 0.1, 0.3, 0.5] #p, c, o, f ,g 
-        self.num = [int(x*100) for x in self.prob]
+        self.num = [int(x*num_mis) for x in self.prob]
         self.tax = {}
         self.names = []
         with open(tax_input) as fin:
@@ -141,5 +141,23 @@ class rd_mislable:
         
 
 if __name__ == "__main__":
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "22222222222")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "1")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP1")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "2")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP2")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "3")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP3")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "4")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP4")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "5")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP5")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "6")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP6")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "7")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP7")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "8")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP8")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "9")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP9")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "10")
     rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP10")
