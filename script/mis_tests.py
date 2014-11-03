@@ -84,11 +84,11 @@ def autotest(refseq, reftax, testingtax):
         truth = test[1]
         if len(truth) == 8:
             rank_nr = int(truth[7])
-            if result_uclust[rank_nr] == truth[rank_nr]:
+            if len(result_uclust) > rank_nr and result_uclust[rank_nr] == truth[rank_nr]:
                 num_corrected_uclust = num_corrected_uclust + 1
-            if result_rdp[rank_nr] == truth[rank_nr]:
+            if len(result_rdp) > rank_nr and result_rdp[rank_nr] == truth[rank_nr]:
                 num_corrected_rdp = num_corrected_rdp + 1
-            if result_blast[rank_nr] == truth[rank_nr]:
+            if len(result_blast) > rank_nr and result_blast[rank_nr] == truth[rank_nr]:
                 num_corrected_blast = num_corrected_blast + 1
         else:
             if result_uclust == truth:
