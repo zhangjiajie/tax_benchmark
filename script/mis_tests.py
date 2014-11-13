@@ -21,11 +21,13 @@ def rank2string(l):
 
 
 def is_mislabel(orig_ranks, ranks):
-    EMPTY_RANK = "-"   # change it if needed
+    #EMPTY_RANK = "-"   # change it if needed
+    
+    EMPTY_RANK = ["-", "None", "No blast hit", "Unclassified", "Unassigned"]
     mislabel_lvl = -1
     min_len = min(len(orig_ranks),len(ranks))
     for rank_lvl in range(min_len):
-        if ranks[rank_lvl] != EMPTY_RANK and ranks[rank_lvl] != orig_ranks[rank_lvl]:
+        if (ranks[rank_lvl] not in EMPTY_RANK) and (ranks[rank_lvl] != orig_ranks[rank_lvl]):
             mislabel_lvl = rank_lvl
             break
     
