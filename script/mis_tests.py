@@ -77,7 +77,7 @@ def findmis(refseq, reftax, name, method, foutput):
     
     #below do the test
     run(query = fquery , refseq = frefseq, taxonomy = frefrank, method = method, outdir = tmpfolder)
-    results = tmpfolder + tmpname + "query_tax_assignments.txt"
+    results = tmpname + "query_tax_assignments.txt"
     
     resultss = ""
     with open(results) as fo:
@@ -86,7 +86,7 @@ def findmis(refseq, reftax, name, method, foutput):
     os.remove(fquery)
     os.remove(frefseq)
     os.remove(frefrank)
-    os.remove(tmpfolder + "query_tax_assignments.txt")
+    os.remove(tmpname + "query_tax_assignments.txt")
     
     flag, MislabeledLevel, OriginalLabel, ProposedLabel = is_mislabel(old_tax, resultss.split()[1].split(";"))
     
