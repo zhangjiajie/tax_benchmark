@@ -77,7 +77,7 @@ def findmis(refseq, reftax, name, method, foutput):
     
     #below do the test
     run(query = fquery , refseq = frefseq, taxonomy = frefrank, method = method, outdir = tmpfolder)
-    results = tmpfolder + "query_tax_assignments.txt"
+    results = tmpfolder + tmpname + "query_tax_assignments.txt"
     
     resultss = ""
     with open(results) as fo:
