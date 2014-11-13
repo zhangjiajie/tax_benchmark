@@ -41,7 +41,7 @@ def is_mislabel(orig_ranks, ranks):
 #;SeqID  MislabeledLevel OriginalLabel   ProposedLabel   Confidence      OriginalTaxonomyPath    ProposedTaxonomyPath    PerRankConfidence
 
 
-def findmis(refseq, reftax, name, old_tax, method, foutput):
+def findmis(refseq, reftax, name, method, foutput):
     """
     refseq: full list of sequences, unaligned
     reftax: full list of taxonomy
@@ -71,6 +71,8 @@ def findmis(refseq, reftax, name, old_tax, method, foutput):
         for ele in reftax:
             if ele[0] != name:
                 fo.write(ele[0] + "	" + rank2string(ele[1]) + "\n")
+            else:
+                old_tax = ele[1]
     fq.close()
     
     #below do the test
@@ -213,7 +215,7 @@ if __name__ == "__main__":
         
         sys.exit()
     
-    if len(sys.argv) > 4:
+    if len(sys.argv) > 5:
         curator(refseq = sys.argv[1], reftax = sys.argv[2], method = sys.argv[3], output = sys.argv[4], testingtax = sys.argv[5])
     else:
         curator(refseq = sys.argv[1], reftax = sys.argv[2], method = sys.argv[3], output = sys.argv[4])
