@@ -91,7 +91,7 @@ def findmis(refseq, reftax, name, old_tax, method, foutput):
     if flag:
         #;SeqID  MislabeledLevel OriginalLabel   ProposedLabel   Confidence      OriginalTaxonomyPath    ProposedTaxonomyPath    PerRankConfidence
         with open(foutput, "a+") as fo:
-            fo.write(name + "    " + MislabeledLevel + "    " + OriginalLabel + "    " + ProposedLabel  + "    " + "1    " +  rank2string(old_tax) + "    " + resultss.split()[1] + "    ;"\n")
+            fo.write(name + "    " + MislabeledLevel + "    " + OriginalLabel + "    " + ProposedLabel  + "    " + "1    " +  rank2string(old_tax) + "    " + resultss.split()[1] + "    ;\n")
     
     return resultss, resultss.split()[1].split(";")
     
