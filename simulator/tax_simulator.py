@@ -29,11 +29,20 @@ def rank2string(l):
         s = s + e + ";"
     s = s[0:-1]
     return s
- 
+
+def is_same_ranks(rk1, rk2, k):
+    flag = True
+    for i in range(k):
+        if rk1[i] != rk2[i]:
+            flag = False
+    return flag
+
+
 class rd_mislable:
-    def __init__(self, tax_input, seed, num_mis = 500):
+    def __init__(self, tax_input, seed, num_mis = 600):
         self.num_mis = num_mis
-        self.prob = [0.05, 0.05, 0.1, 0.3, 0.5] #p, c, o, f ,g 
+        #self.prob = [0.05, 0.05, 0.1, 0.3, 0.5] #p, c, o, f ,g 
+        self.prob = [0.05, 0.05, 0.2, 0.3, 0.4] #p, c, o, f ,g 
         self.num = [int(x*num_mis) for x in self.prob]
         self.tax = {}
         self.names = []
@@ -49,26 +58,30 @@ class rd_mislable:
         self.remaintax = {}
         self.testingtax = {}
         
-    def find_all_taxs(self, rank_idx, rank_name_exclude):
+    def find_all_taxs(self, rank_idx, rank_name_exclude, ranks2keep):
         rks = []
         for key in self.tax:
             rank = self.tax[key]
-            if rank[rank_idx] != rank_name_exclude:
-                rks.append(rank)
+            if rank[rank_idx] != self.tax[rank_name_exclude][rank_idx]:
+                if is_same_ranks(ranks2keep, rank, rank_idx):
+                    print(rank[rank_idx])
+                    print("vs")
+                    print(self.tax[rank_name_exclude][rank_idx])
+                    rks.append(rank)
         return rks
     
     def mis_lable(self, names, rank_idx):
         for name in names:
-            remain_ranks = self.find_all_taxs(rank_idx, name)
-            idx = self.rd.rand_nr.randint(0, len(remain_ranks))
-            
-            tk1 = self.tax[name]
-            
-            tk2 = copy.copy(tk1)
-            
-            tk2.append(str(rank_idx))
-            self.truetax[name] = tk2
-            self.mistax[name] = remain_ranks[idx]
+            remain_ranks = self.find_all_taxs(rank_idx, name, self.tax[name])
+            if len(remain_ranks) > 0:
+                idx = self.rd.rand_nr.randint(0, len(remain_ranks)-1)
+                tk1 = self.tax[name]
+                tk2 = copy.copy(tk1)
+                tk2.append(str(rank_idx))
+                self.truetax[name] = tk2
+                self.mistax[name] = remain_ranks[idx]
+            else:
+                print("find single rank!")
     
     def simulate(self, fout):
         idx = range(len(self.names))
@@ -141,8 +154,10 @@ class rd_mislable:
         
 
 if __name__ == "__main__":
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "1")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "555")
     rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP1")
+    
+    """
     rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "2")
     rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP2")
     rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "3")
@@ -161,3 +176,4 @@ if __name__ == "__main__":
     rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP9")
     rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "10")
     rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP10")
+    """
