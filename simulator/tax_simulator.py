@@ -39,7 +39,7 @@ def is_same_ranks(rk1, rk2, k):
 
 
 class rd_mislable:
-    def __init__(self, tax_input, seed, num_mis = 120):
+    def __init__(self, tax_input, seed, num_mis = 560):
         self.num_mis = num_mis
         #self.prob = [0.05, 0.05, 0.1, 0.3, 0.5] #p, c, o, f ,g 
         self.prob = [0.05, 0.05, 0.2, 0.3, 0.4] #p, c, o, f ,g 
@@ -64,9 +64,9 @@ class rd_mislable:
             rank = self.tax[key]
             if rank[rank_idx] != self.tax[rank_name_exclude][rank_idx]:
                 if is_same_ranks(ranks2keep, rank, rank_idx):
-                    print(rank[rank_idx])
-                    print("vs")
-                    print(self.tax[rank_name_exclude][rank_idx])
+                    #print(rank[rank_idx])
+                    #print("vs")
+                    #print(self.tax[rank_name_exclude][rank_idx])
                     rks.append(rank)
         return rks
     
@@ -81,6 +81,7 @@ class rd_mislable:
                 self.truetax[name] = tk2
                 self.mistax[name] = remain_ranks[idx]
             else:
+                self.remaintax[name] = self.tax[name]
                 print("find single rank!")
     
     def simulate(self, fout):
@@ -134,20 +135,16 @@ class rd_mislable:
         for name in names_rest:
             self.remaintax[name] = self.tax[name]
             
-        print("1")
         s_mis = map2string(self.mistax)
-        print("2")
         s_mis_true = map2string(self.truetax)
-        print("3")
         s_testing = map2string(self.testingtax)
-        print("4")
         s_remain = map2string(self.remaintax)
         
         with open(fout+".tax", "w") as fo:
             fo.write(s_mis + s_testing + s_remain)
         
-        with open(fout+".testing.tax", "w") as fo:
-            fo.write(s_mis)
+        #with open(fout+".testing.tax", "w") as fo:
+            #fo.write(s_mis)
             
         with open(fout+".true.tax", "w") as fo:
             fo.write(s_mis_true)
@@ -156,46 +153,46 @@ class rd_mislable:
 if __name__ == "__main__":
     
     #5%
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "555")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP1")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "2")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP2")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "3")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP3")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "4")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP4")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "5")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP5")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "6")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP6")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "7")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP7")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "8")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP8")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "9")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP9")
-    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "10")
-    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP10")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "555")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP1")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "2")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP2")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "3")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP3")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "4")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP4")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "5")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP5")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "6")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP6")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "7")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP7")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "8")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP8")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "9")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP9")
+    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "10")
+    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP10")
     
     #1%
     #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "111")
     #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP1")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "22")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP2")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "33")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP3")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "44")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP4")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "55")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP5")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "66")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP6")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "77")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP7")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "88")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP8")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "99")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP9")
-    rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "100")
-    rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP10")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "22")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP2")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "33")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP3")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "44")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP4")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "55")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP5")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "66")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP6")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "77")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP7")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "88")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP8")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "99")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP9")
+    #rm = rd_mislable(tax_input = "/home/zhangje/GIT/tax_benchmark/simulation_LTP/LTP.tax", seed = "100")
+    #rm.simulate(fout = "/home/zhangje/GIT/tax_benchmark/simulator/mLTP10")
     
